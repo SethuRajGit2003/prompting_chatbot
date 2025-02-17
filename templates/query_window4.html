@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Study Abroad CRM - AI Query Interface</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css">
+    <style>
+        body {
+            background-color: #f8f9fa;
+            font-family: Arial, sans-serif;
+        }
+        .container {
+            max-width: 800px;
+            margin-top: 50px;
+            padding: 30px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+        .result-box {
+            white-space: pre-wrap;
+            background: #eef2f7;
+            padding: 15px;
+            border-radius: 5px;
+            min-height: 100px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2 class="text-center mb-4">AI-Powered CRM Query Interface</h2>
+        
+        <div class="mb-3">
+            <input type="text" id="queryInput" class="form-control" placeholder="Enter your query in natural language...">
+        </div>
+        <div class="text-center">
+            <button class="btn btn-primary" onclick="executeQuery()">Run Query</button>
+        </div>
+        
+        <!-- Section for Generated MongoDB Query -->
+        <h4 class="mt-4">Generated MongoDB Query:</h4>
+        <div class="result-box" id="generatedQuery">No query generated yet.</div>
+        
+        <!-- Section for Query Results -->
+        <h4 class="mt-4">Results:</h4>
+        <div class="result-box" id="results">No query executed yet.</div>
+    </div>
+
+    <script>
+        async function executeQuery() {
+            const query = document.getElementById('queryInput').value.trim();
+            const generatedQueryDiv = document.getElementById('generatedQuery');
+            const resultsDiv = document.getElementById('results');
+            
+            if (!query) {
+                resultsDiv.textContent = 'Please enter a query.';
+                return;
+            }
+            
+            generatedQueryDiv.textContent = 'Generating query...';
+            resultsDiv.textContent = 'Processing...';
+            
+            try {
+                const response = await fetch('/query', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ query: query })
+                });
+                
+                const data = await response.json();
+                
+                // Display the generated MongoDB query
+                if (data.generated_query) {
+                    generatedQueryDiv.textContent = JSON.stringify(data.generated_query, null, 2);
+                } else {
+                    generatedQueryDiv.textContent = 'No query generated.';
+                }
+                
+                // Display the query results
+                if (data.result) {
+                    resultsDiv.textContent = JSON.stringify(data.result, null, 2);
+                } else {
+                    resultsDiv.textContent = 'No results found.';
+                }
+                
+            } catch (error) {
+                generatedQueryDiv.textContent = 'Error generating query.';
+                resultsDiv.textContent = `Error: ${error.message}`;
+            }
+        }
+    </script>
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
