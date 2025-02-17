@@ -1,0 +1,115 @@
+{
+    "collections": {
+      "applicants": {
+        "description": "Stores information about applicants",
+        "fields": {
+          "applicant_number": {
+            "type": "int",
+            "description": "Unique identifier for the applicant"
+          },
+          "name": {
+            "type": "string",
+            "description": "Full name of the applicant"
+          },
+          "state": {
+            "type": "string",
+            "description": "State of residence"
+          },
+          "country_of_interest": {
+            "type": "string",
+            "description": "Country the applicant is interested in studying"
+          },
+          "program": {
+            "type": "string",
+            "description": "Program of study (e.g., Engineering, Medicine)"
+          },
+          "email": {
+            "type": "string",
+            "description": "Applicant's email address"
+          },
+          "phone_number": {
+            "type": "string",
+            "description": "Applicant's contact number"
+          }
+        },
+        "indexes": ["applicant_number", "email"]
+      },
+      "Mark_List": {
+        "description": "Stores academic marks for applicants",
+        "fields": {
+          "applicant_number": {
+            "type": "int",
+            "description": "Unique identifier for the applicant"
+          },
+          "10th": {
+            "type": "object",
+            "fields": {
+              "total_marks": {
+                "type": "int",
+                "description": "Total marks in 10th grade"
+              },
+              "obtained_marks": {
+                "type": "int",
+                "description": "Marks obtained in 10th grade"
+              },
+              "percentage": {
+                "type": "float",
+                "description": "Percentage scored in 10th grade"
+              },
+              "grade": {
+                "type": "string",
+                "description": "Grade achieved in 10th grade"
+              }
+            }
+          },
+          "12th": {
+            "type": "object",
+            "fields": {
+              "total_marks": {
+                "type": "int",
+                "description": "Total marks in 12th grade"
+              },
+              "obtained_marks": {
+                "type": "int",
+                "description": "Marks obtained in 12th grade"
+              },
+              "percentage": {
+                "type": "float",
+                "description": "Percentage scored in 12th grade"
+              },
+              "grade": {
+                "type": "string",
+                "description": "Grade achieved in 12th grade"
+              }
+            }
+          },
+          "Degree": {
+            "type": "object",
+            "fields": {
+              "cgpa": {
+                "type": "float",
+                "description": "CGPA obtained in degree"
+              },
+              "grade": {
+                "type": "string",
+                "description": "Grade achieved in degree"
+              }
+            }
+          }
+        }
+      },
+      "Annual_Income": {
+        "description": "Stores annual income details of applicants",
+        "fields": {
+          "applicant_number": {
+            "type": "int",
+            "description": "Unique identifier for the applicant"
+          },
+          "annual_income": {
+            "type": "int",
+            "description": "Annual income of the applicant's family"
+          }
+        }
+      }
+    }
+  }
